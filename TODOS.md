@@ -1,5 +1,22 @@
 # SchematronMCP - Development TODOs
 
+## 📚 Implementation Guides
+
+Before working on tasks below, reference these guides in `ClaudeUsage/` for best practices:
+
+- **Testing** → `ClaudeUsage/testing_strategies.md`
+- **CI/CD** → `ClaudeUsage/ci_cd_patterns.md`
+- **Git Workflow** → `ClaudeUsage/git_commit_guide.md` & `ClaudeUsage/git_conventional_commits.md`
+- **Docker** → `ClaudeUsage/docker_guide.md`
+- **Code Quality** → `ClaudeUsage/code_quality.md` & `ClaudeUsage/code_style_guide.md`
+- **Project Structure** → `ClaudeUsage/project_structure.md`
+- **Documentation** → `ClaudeUsage/documentation_standards.md`
+- **Research & Search** → `ClaudeUsage/house_agents.md` & `ClaudeUsage/research_workflow.md`
+
+See `ClaudeUsage/README.md` for the complete guide index.
+
+---
+
 ## High Priority
 
 ### Testing Infrastructure
