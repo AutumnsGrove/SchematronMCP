@@ -25,9 +25,13 @@ classifiers = [
 
 dependencies = [
     "mcp>=0.9.0",
-    "mlx-lm>=0.19.0",
+    "openai>=1.0.0",
+    "gradio>=4.0.0",
+    "httpx>=0.25.0",
     "lxml>=4.9.0",
+    "lxml_html_clean>=0.4.0",
     "pydantic>=2.0.0",
+    "json-repair>=0.5.0",
 ]
 
 [project.optional-dependencies]
@@ -37,6 +41,7 @@ dev = [
     "black>=23.0.0",
     "mypy>=1.0.0",
     "ruff>=0.1.0",
+    "mlx-lm>=0.19.0",
 ]
 
 [project.urls]
@@ -49,7 +54,7 @@ Issues = "https://github.com/yourusername/schematron-mcp/issues"
 schematron-mcp = "server:main"
 
 [tool.setuptools]
-py-modules = ["server", "mlx_inference", "html_cleaner", "example_schemas"]
+py-modules = ["server", "lm_studio_inference", "mlx_inference", "html_cleaner", "example_schemas", "gradio_app"]
 
 [tool.black]
 line-length = 100

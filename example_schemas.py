@@ -404,8 +404,33 @@ TABLE_SCHEMA: Dict[str, Any] = {
 }
 
 
+# General Purpose / Flexible Schema
+GENERAL_SCHEMA: Dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "title": {
+            "type": "string",
+            "description": "Main title or heading"
+        },
+        "content": {
+            "type": "string",
+            "description": "Main content or body text"
+        },
+        "metadata": {
+            "type": "object",
+            "description": "Additional metadata as key-value pairs",
+            "additionalProperties": True
+        }
+    },
+    "required": ["title"],
+    "additionalProperties": True,
+    "description": "Flexible schema that adapts to any content type"
+}
+
+
 # All schemas for easy access
 ALL_SCHEMAS = {
+    "general": GENERAL_SCHEMA,
     "product": PRODUCT_SCHEMA,
     "article": ARTICLE_SCHEMA,
     "job": JOB_POSTING_SCHEMA,

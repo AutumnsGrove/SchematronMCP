@@ -9,11 +9,11 @@ from enum import Enum
 from typing import Optional
 
 try:
-    from lxml.html.clean import Cleaner
+    from lxml_html_clean import Cleaner
     import lxml.html as LH
 except ImportError:
     raise ImportError(
-        "lxml is required for HTML cleaning. Install with: pip install lxml"
+        "lxml_html_clean is required for HTML cleaning. Install with: pip install lxml_html_clean"
     )
 
 
