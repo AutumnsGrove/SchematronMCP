@@ -1,0 +1,22 @@
+{
+  "_comment": "Example Claude Desktop configuration for Schematron MCP Server",
+  "_instructions": [
+    "1. Copy this file's content",
+    "2. Open ~/.config/claude/claude_desktop_config.json",
+    "3. Add the 'schematron' entry to the 'mcpServers' object",
+    "4. Replace /absolute/path/to/schematron-mcp with your actual path",
+    "5. Restart Claude Desktop"
+  ],
+
+  "mcpServers": {
+    "schematron": {
+      "command": "python",
+      "args": [
+        "/absolute/path/to/schematron-mcp/server.py"
+      ],
+      "env": {
+        "SCHEMATRON_MODEL_PATH": "mlx-community/Schematron-3B-4bit"
+      }
+    }
+  }
+}

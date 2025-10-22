@@ -1,0 +1,128 @@
+SCHEMATRON MCP SERVER - INSTALLATION INSTRUCTIONS
+================================================
+
+🎯 QUICK START (5 Minutes)
+--------------------------
+
+1. EXTRACT THIS ZIP FILE
+   - Extract to somewhere like ~/schematron-mcp
+   - Open Terminal and cd to that directory
+
+2. INSTALL DEPENDENCIES
+   
+   cd ~/schematron-mcp
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -e .
+
+3. TEST THE INSTALLATION
+   
+   python test_extraction.py
+   
+   (This will download the model ~2GB on first run)
+
+4. CONFIGURE CLAUDE DESKTOP
+   
+   - Get your full path: pwd
+   - Edit ~/.config/claude/claude_desktop_config.json
+   - Add (replace YOUR_PATH):
+
+   {
+     "mcpServers": {
+       "schematron": {
+         "command": "python",
+         "args": ["YOUR_PATH/schematron-mcp/server.py"],
+         "env": {
+           "SCHEMATRON_MODEL_PATH": "mlx-community/Schematron-3B-4bit"
+         }
+       }
+     }
+   }
+
+5. RESTART CLAUDE DESKTOP
+
+6. TEST IN CLAUDE
+   
+   Try: "Extract product data from this HTML: 
+   <div><h1>iPhone</h1><p>$999</p></div>"
+
+📖 DETAILED DOCUMENTATION
+-------------------------
+
+- README.md         - Full documentation
+- QUICKSTART.md     - Detailed quick start
+- CONTRIBUTING.md   - Contribution guidelines
+
+🧪 FILES INCLUDED
+-----------------
+
+Core:
+- server.py              Main MCP server
+- mlx_inference.py       MLX model wrapper  
+- html_cleaner.py        HTML preprocessing
+- example_schemas.py     Pre-built schemas
+
+Documentation:
+- README.md              Full docs
+- QUICKSTART.md          Quick start guide
+- CONTRIBUTING.md        Contribution guide
+- INSTALL.txt            This file
+
+Config:
+- pyproject.toml         Dependencies
+- claude_desktop_config.example.json
+- .gitignore
+
+Testing:
+- test_extraction.py     Test script
+
+Legal:
+- LICENSE                MIT License
+
+🆘 TROUBLESHOOTING
+------------------
+
+Problem: "mlx_lm not found"
+Solution: Make sure venv is activated: source venv/bin/activate
+
+Problem: "Model download fails"
+Solution: Check internet connection, try: 
+  python -c "import mlx_lm; mlx_lm.load('mlx-community/Schematron-3B-4bit')"
+
+Problem: Claude doesn't see the tool
+Solution: 
+  1. Check logs: ~/Library/Logs/Claude/mcp*.log
+  2. Verify absolute path in config (not ~/)
+  3. Restart Claude Desktop completely
+
+Problem: Extraction fails
+Solution: 
+  1. Make sure HTML is valid
+  2. Try with auto_clean=True
+  3. Check schema is valid JSON Schema
+
+📧 SUPPORT
+----------
+
+Issues: github.com/yourusername/schematron-mcp/issues
+
+💡 USAGE TIPS
+------------
+
+1. Let Claude fetch HTML first (using web tools)
+2. Use auto_clean=True for best results
+3. Keep temperature=0.0 for consistent output
+4. Start with example_schemas.py templates
+5. Define clear schemas with descriptions
+
+✨ EXAMPLE
+----------
+
+You: "Go to apple.com/iphone and extract all iPhone models with prices"
+
+Claude will:
+1. Fetch the HTML from apple.com
+2. Use schematron_extract_structured_data tool
+3. Return clean JSON with model names and prices
+
+THAT'S IT! Enjoy extracting structured data! 🎉
