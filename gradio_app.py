@@ -197,12 +197,19 @@ async def extract_data(
         return cleaned_preview, "", "", error_msg
 
 
-def calculate_dynamic_tokens(html_input: str, schema_json: str) -> tuple[int, str]:
+def calculate_dynamic_tokens(
+    html_input: str,
+    schema_json: str,
+    auto_clean: bool,
+    cleaning_level: str
+) -> tuple[int, str]:
     """Calculate recommended max_tokens based on HTML and schema size.
 
     Args:
         html_input: HTML content
         schema_json: JSON schema string
+        auto_clean: Whether to clean HTML first
+        cleaning_level: Cleaning level (light/standard/aggressive)
 
     Returns:
         Tuple of (recommended_tokens, info_message)
@@ -210,8 +217,22 @@ def calculate_dynamic_tokens(html_input: str, schema_json: str) -> tuple[int, st
     if not html_input or not html_input.strip():
         return 32000, "⚠️ No HTML provided - using default 32k tokens"
 
-    # Estimate tokens (rough: 1 token ≈ 4 characters)
-    html_chars = len(html_input)
+    # Clean HTML first if requested (to match what model will see)
+    if auto_clean:
+        level_map = {
+            "light": HTMLCleaningLevel.LIGHT,
+            "standard": HTMLCleaningLevel.STANDARD,
+            "aggressive": HTMLCleaningLevel.AGGRESSIVE
+        }
+        level = level_map.get(cleaning_level.lower(), HTMLCleaningLevel.STANDARD)
+        html_to_analyze = clean_html_content(html_input, level=level)
+        html_note = f" (after {cleaning_level} cleaning)"
+    else:
+        html_to_analyze = html_input
+        html_note = " (raw HTML)"
+
+    # Estimate tokens on CLEANED HTML (rough: 1 token ≈ 4 characters)
+    html_chars = len(html_to_analyze)
     schema_chars = len(schema_json)
 
     # Input tokens (HTML + schema + system prompt overhead)
@@ -235,7 +256,7 @@ def calculate_dynamic_tokens(html_input: str, schema_json: str) -> tuple[int, st
     recommended = min(recommended, 128000)
 
     info = f"""✅ **Auto-calculated tokens:**
-- HTML: {html_chars:,} chars (~{html_chars//4:,} tokens)
+- HTML{html_note}: {html_chars:,} chars (~{html_chars//4:,} tokens)
 - Schema: {schema_chars:,} chars (~{schema_chars//4:,} tokens)
 - Estimated output: ~{output_tokens:,} tokens
 - **Recommended max_tokens: {recommended:,}** (with 20% buffer)"""
@@ -442,7 +463,7 @@ def create_ui() -> gr.Blocks:
         # Auto-calculate tokens button
         auto_tokens_btn.click(
             fn=calculate_dynamic_tokens,
-            inputs=[html_input, schema_editor],
+            inputs=[html_input, schema_editor, auto_clean, cleaning_level],
             outputs=[max_tokens, token_info]
         )
 

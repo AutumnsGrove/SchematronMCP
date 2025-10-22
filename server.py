@@ -95,14 +95,15 @@ class ExtractStructuredDataInput(BaseModel):
         le=1.0
     )
     
-    max_tokens: int = Field(
-        default=8000,
+    max_tokens: Optional[int] = Field(
+        default=None,
         description=(
-            "Maximum number of tokens to generate. Adjust based on expected JSON size. "
-            "Larger schemas may need more tokens."
+            "Maximum number of tokens to generate. If not specified, automatically "
+            "calculated based on HTML size (small: 8k, medium: 16k, large: 32k). "
+            "Model maximum is 128k tokens."
         ),
         ge=100,
-        le=16000
+        le=128000
     )
     
     response_format: ResponseFormat = Field(
@@ -158,6 +159,39 @@ class CleanHTMLInput(BaseModel):
 
 
 # Helper Functions
+def calculate_smart_tokens(html: str, schema: Dict[str, Any]) -> int:
+    """Calculate optimal max_tokens based on HTML and schema size.
+
+    Args:
+        html: HTML content
+        schema: JSON Schema
+
+    Returns:
+        Recommended max_tokens value
+    """
+    html_chars = len(html)
+    schema_chars = len(json.dumps(schema))
+
+    # Smart token budget based on HTML size:
+    # - Small HTML (<10k chars): 8k-12k tokens output
+    # - Medium HTML (10k-50k): 16k-24k tokens output
+    # - Large HTML (50k+): 32k-48k tokens output
+    if html_chars < 10000:
+        output_tokens = 8000
+    elif html_chars < 50000:
+        output_tokens = 16000
+    else:
+        output_tokens = 32000
+
+    # Add 20% buffer for safety
+    recommended = int(output_tokens * 1.2)
+
+    # Cap at model maximum
+    recommended = min(recommended, 128000)
+
+    return recommended
+
+
 def format_extraction_result(
     result: Dict[str, Any],
     response_format: ResponseFormat,
@@ -327,11 +361,11 @@ async def extract_structured_data(params: ExtractStructuredDataInput, ctx: Conte
     
     # Report progress
     await ctx.report_progress(0.1, "Initializing model...")
-    
+
     # Get model instance
     model = await get_model()
-    
-    # Clean HTML if requested
+
+    # Clean HTML if requested - DO THIS FIRST
     original_length = len(params.html)
     if params.auto_clean:
         await ctx.report_progress(0.2, "Cleaning HTML...")
@@ -340,6 +374,14 @@ async def extract_structured_data(params: ExtractStructuredDataInput, ctx: Conte
     else:
         cleaned_html = params.html
         await ctx.log_info(f"Using raw HTML: {original_length} chars")
+
+    # NOW calculate smart token budget based on CLEANED HTML
+    if params.max_tokens is None:
+        params.max_tokens = calculate_smart_tokens(cleaned_html, params.schema)
+        await ctx.log_info(
+            f"Auto-calculated max_tokens: {params.max_tokens} "
+            f"(Cleaned HTML: {len(cleaned_html):,} chars)"
+        )
     
     # Extract structured data
     try:
