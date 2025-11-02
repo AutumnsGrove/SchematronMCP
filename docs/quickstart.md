@@ -41,9 +41,9 @@ This will install:
 
 ```bash
 # Test that imports work
-python -c "from mlx_inference import SchematronModel; print('✓ MLX imports OK')"
-python -c "from html_cleaner import clean_html_content; print('✓ HTML cleaner OK')"
-python -c "from server import mcp; print('✓ MCP server OK')"
+python -c "from schematron_mcp.inference.mlx import SchematronModel; print('✓ MLX imports OK')"
+python -c "from schematron_mcp.cleaning.html_cleaner import clean_html_content; print('✓ HTML cleaner OK')"
+python -c "from schematron_mcp.server import mcp; print('✓ MCP server OK')"
 
 # Run the test script (optional - downloads model ~2GB)
 python test_extraction.py
@@ -64,7 +64,7 @@ Edit `~/.config/claude/claude_desktop_config.json`:
   "mcpServers": {
     "schematron": {
       "command": "python",
-      "args": ["/PASTE/YOUR/PATH/HERE/schematron-mcp/server.py"],
+      "args": ["/PASTE/YOUR/PATH/HERE/schematron-mcp/schematron_mcp/server.py"],
       "env": {
         "SCHEMATRON_MODEL_PATH": "mlx-community/Schematron-3B-4bit"
       }
@@ -125,7 +125,7 @@ Then update your Claude config to use this Python:
 ```json
 {
   "command": "/path/to/schematron-mcp/venv/bin/python",
-  "args": ["/path/to/schematron-mcp/server.py"]
+  "args": ["/path/to/schematron-mcp/schematron_mcp/server.py"]
 }
 ```
 
@@ -145,7 +145,7 @@ python -c "import mlx_lm; mlx_lm.load('mlx-community/Schematron-3B-4bit')"
 
 2. Verify the server runs:
    ```bash
-   python server.py &
+   python schematron_mcp/server.py &
    # Should not error, will wait for input
    # Press Ctrl+C to exit
    ```
@@ -157,7 +157,7 @@ python -c "import mlx_lm; mlx_lm.load('mlx-community/Schematron-3B-4bit')"
 
 ## Next Steps
 
-- Read `README.md` for full documentation
+- Read `../README.md` for full documentation
 - Check `example_schemas.py` for pre-built schemas
 - Run `test_extraction.py` to see examples
 - Look at the MCP best practices in the code

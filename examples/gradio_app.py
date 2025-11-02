@@ -21,9 +21,9 @@ except ImportError:
     )
 
 # Import Schematron modules
-from lm_studio_inference import get_global_model, SchematronModel
-from html_cleaner import clean_html_content, HTMLCleaningLevel
-from example_schemas import ALL_SCHEMAS, list_schemas
+from schematron_mcp.inference.lm_studio import get_global_model, SchematronModel
+from schematron_mcp.cleaning.html_cleaner import clean_html_content, HTMLCleaningLevel
+from examples.schemas import ALL_SCHEMAS, list_schemas
 
 
 # Global model instance

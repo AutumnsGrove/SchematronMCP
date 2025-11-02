@@ -291,7 +291,7 @@ For issues or questions:
 1. Check that LM Studio is running with the model loaded
 2. Review error messages in the "Errors" panel
 3. Try the examples to verify setup
-4. Check the main project README for model configuration
+4. Check the main project `../README.md` for model configuration
 
 ---
 

@@ -51,10 +51,10 @@ Repository = "https://github.com/yourusername/schematron-mcp"
 Issues = "https://github.com/yourusername/schematron-mcp/issues"
 
 [project.scripts]
-schematron-mcp = "server:main"
+schematron-mcp = "schematron_mcp.server:main"
 
 [tool.setuptools]
-py-modules = ["server", "lm_studio_inference", "mlx_inference", "html_cleaner", "example_schemas", "gradio_app"]
+packages = ["schematron_mcp", "schematron_mcp.inference", "schematron_mcp.cleaning"]
 
 [tool.black]
 line-length = 100

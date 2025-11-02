@@ -1,8 +1,32 @@
+⚠️ **Experimental Project** | 🧪 **Learning Exercise** | 🐌 **Performance: Slow**
+
 # Schematron MCP Server
 
 A **Model Context Protocol (MCP) server** that provides HTML-to-JSON extraction using the [Schematron-3B](https://huggingface.co/inference-net/Schematron-3B) model running locally via MLX.
 
-This server enables AI agents (like Claude) to convert messy HTML into clean, structured JSON that conforms to custom schemas - perfect for web scraping, data extraction, and building intelligent web agents.
+This experimental server enables AI agents (like Claude) to convert messy HTML into clean, structured JSON that conforms to custom schemas - a learning exercise exploring ML-based extraction approaches.
+
+## ⚠️ Project Status
+
+**This is an experimental project and learning exercise, NOT production-ready software.**
+
+This MCP server was built to explore the Schematron-3B model and learn about building MCP servers. While functional, it has some important limitations:
+
+- **Performance**: Significantly slower than traditional HTML parsing/extraction libraries
+- **Experimental**: Using an ML model for structured extraction is interesting but not optimal for most use cases
+- **Learning Focus**: Primary value is as a reference implementation for MCP server development
+
+### When to Use This
+- Learning about MCP server architecture
+- Experimenting with ML-based extraction
+- Understanding local model inference with MLX
+
+### When NOT to Use This
+- Production applications requiring fast, reliable extraction
+- High-throughput data processing
+- Mission-critical parsing tasks
+
+**Recommendation**: For production HTML extraction, use established libraries like BeautifulSoup, lxml, or Scrapy. This project is best used as a learning resource and experimental playground.
 
 ## 🎯 Features
 

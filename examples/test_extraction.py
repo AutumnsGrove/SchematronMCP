@@ -7,9 +7,9 @@ without going through the full MCP protocol.
 """
 
 import asyncio
-from mlx_inference import SchematronModel
-from html_cleaner import clean_html_content
-from example_schemas import PRODUCT_SCHEMA, ARTICLE_SCHEMA
+from schematron_mcp.inference.mlx import SchematronModel
+from schematron_mcp.cleaning.html_cleaner import clean_html_content
+from examples.schemas import PRODUCT_SCHEMA, ARTICLE_SCHEMA
 
 
 async def test_product_extraction():
@@ -152,7 +152,7 @@ async def test_html_cleaning():
     </html>
     """
     
-    from html_cleaner import HTMLCleaningLevel
+    from schematron_mcp.cleaning.html_cleaner import HTMLCleaningLevel
     
     for level in [HTMLCleaningLevel.LIGHT, HTMLCleaningLevel.STANDARD, HTMLCleaningLevel.AGGRESSIVE]:
         print(f"\n{level.value.upper()} Cleaning:")

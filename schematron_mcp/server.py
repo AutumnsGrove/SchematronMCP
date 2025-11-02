@@ -15,8 +15,8 @@ from enum import Enum
 from mcp.server.fastmcp import FastMCP, Context
 from pydantic import BaseModel, Field, ConfigDict, field_validator
 
-from lm_studio_inference import SchematronModel
-from html_cleaner import clean_html_content, HTMLCleaningLevel
+from schematron_mcp.inference.lm_studio import SchematronModel
+from schematron_mcp.cleaning.html_cleaner import clean_html_content, HTMLCleaningLevel
 
 
 # Constants
@@ -493,6 +493,11 @@ async def clean_html(params: CleanHTMLInput) -> str:
 
 
 # Main entry point
+def main():
+    """Main entry point for the MCP server."""
+    mcp.run()
+
+
 if __name__ == "__main__":
     # Run the MCP server with stdio transport
-    mcp.run()
+    main()
