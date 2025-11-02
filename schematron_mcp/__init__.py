@@ -6,22 +6,12 @@ A Model Context Protocol server that provides HTML-to-JSON extraction using Sche
 
 __version__ = "0.1.0"
 
-# Export main server components
-from schematron_mcp.server import mcp
-
-# Export inference models
-from schematron_mcp.inference.lm_studio import SchematronModel
-
-# Export cleaning utilities
-from schematron_mcp.cleaning.html_cleaner import (
-    clean_html_content,
-    HTMLCleaningLevel,
-)
+# Lazy imports to avoid circular dependencies and reduce startup overhead
+# Users should import from specific modules:
+# - from schematron_mcp.inference.lm_studio import SchematronModel
+# - from schematron_mcp.cleaning.html_cleaner import clean_html_content
+# - from schematron_mcp.server import main
 
 __all__ = [
-    "mcp",
-    "SchematronModel",
-    "clean_html_content",
-    "HTMLCleaningLevel",
     "__version__",
 ]

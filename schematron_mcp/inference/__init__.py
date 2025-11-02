@@ -1,17 +1,11 @@
 """
-Inference backends for Schematron model.
+Inference backend for Schematron model.
 
-Supports both MLX (Apple Silicon) and LM Studio (OpenAI-compatible API).
+Uses LM Studio (OpenAI-compatible API) for model inference.
 """
 
-from schematron_mcp.inference.lm_studio import SchematronModel as LMStudioModel
-from schematron_mcp.inference.mlx import SchematronModel as MLXModel
-
-# Default to LM Studio model
-SchematronModel = LMStudioModel
+from schematron_mcp.inference.lm_studio import SchematronModel
 
 __all__ = [
     "SchematronModel",
-    "LMStudioModel",
-    "MLXModel",
 ]
