@@ -1,6 +1,6 @@
 # Project Instructions - Claude Code
 
-> **Note**: This is the main orchestrator file. For detailed guides, see `ClaudeUsage/README.md`
+> **Note**: This is the main orchestrator file. For detailed development guides, see the `dev` branch where `ClaudeUsage/README.md` contains comprehensive documentation.
 
 ---
 
@@ -23,18 +23,19 @@ SchematronMCP is a Model Context Protocol (MCP) server that provides HTML-to-JSO
 - **Dual Interface**: MCP tools for Claude integration + Gradio web UI for manual testing
 - **No API Keys Required**: Fully local processing, no external API calls
 - **Key Files**:
-  - `server.py` - Main MCP server implementation
-  - `lm_studio_inference.py` - LM Studio inference backend
-  - `mlx_inference.py` - MLX inference backend
-  - `gradio_app.py` - Web UI for testing
-  - `html_cleaner.py` - HTML preprocessing
+  - `schematron_mcp/server.py` - Main MCP server implementation
+  - `schematron_mcp/inference/lm_studio.py` - LM Studio inference backend
+  - `schematron_mcp/inference/mlx.py` - MLX inference backend
+  - `examples/gradio_app.py` - Web UI for testing
+  - `schematron_mcp/cleaning/html_cleaner.py` - HTML preprocessing
 
 ## Existing Documentation
 - `README.md` - Main project documentation and setup
-- `QUICKSTART.md` - Quick setup and usage guide
+- `docs/quickstart.md` - Quick setup and usage guide
 - `CONTRIBUTING.md` - Contribution guidelines
-- `GRADIO_APP_README.md` - Gradio web UI documentation
+- `docs/gradio-ui.md` - Gradio web UI documentation
 - `TODOS.md` - Project task tracking
+- `examples/README.md` - Example usage and schemas
 
 ---
 
@@ -80,9 +81,22 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 ---
 
+## Branch Structure
+
+**Main Branch**: Production-ready code, clean structure, no development guides
+**Dev Branch**: Contains all development guides in `ClaudeUsage/` directory
+
+To access development guides:
+```bash
+git checkout dev
+# Browse ClaudeUsage/ directory for detailed guides
+```
+
+---
+
 ## When to Read Specific Guides
 
-**Read the full guide in `ClaudeUsage/` when you encounter these situations:**
+**Read the full guide in `ClaudeUsage/` (on dev branch) when you encounter these situations:**
 
 ### Secrets & API Keys
 - **When managing API keys or secrets** → Read `ClaudeUsage/secrets_management.md`
